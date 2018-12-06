@@ -180,7 +180,7 @@ class Admin extends CI_Controller {
 								$this->session->set_flashdata('uploadGambarProduk',2);
 							}
 						}
-						redirect($this->config->base_url().'admin/tambahProduk');
+						redirect($this->config->base_url().'admin/produk/tambah');
 					}
 				}else{
 					$this->load->view('admin/header');
@@ -188,7 +188,23 @@ class Admin extends CI_Controller {
 					$this->load->view('admin/footer');
 				}
 			}else if($status == 'hapus' && $idProdukP != null){
-				$this->db->where();
+				$this->db->where('idProduk',$idProdukP);
+				if($this->db->get('produk')->num_rows()>0){
+					$this->db->where('idProduk',$idProdukP);
+					$gambar = $this->db->get('gambarProduk');
+					if($gambar->num_rows()>0){
+						$gambar = $gambar->result()[0];
+						$fullpath = 'images/produk/'.$gambar->idGambar.'.'.$gambar->extension;
+						if(file_exists($fullpath)){
+							unlink($fullpath);
+						}
+					}
+					$this->db->where('idProduk',$idProdukP);
+					$this->db->delete('produk');
+					$this->session->set_flashdata('hapusProduk','bisa');
+				}else{
+					$this->session->set_flashdata('hapusProduk','gagal');
+				}
 			}else
 			// ######Akhir tambah Produk#######
 			
@@ -202,7 +218,6 @@ class Admin extends CI_Controller {
 			redirect($this->config->base_url().'admin/signIn');
 		}
 	}
-
 
 
 

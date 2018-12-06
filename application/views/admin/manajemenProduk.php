@@ -7,6 +7,21 @@
                                 <strong class="card-title"><?php echo $judul; ?></strong>
                             </div>
                             <div class="card-body">
+                            <?php
+                            if($this->session->flashdata('hapusProduk')=='bisa'){
+                            ?>
+                                <div class="alert alert-success" role="alert">
+                                Hapus produk sukses!!!
+                                </div>
+                            <?php
+                            }else if($this->session->flashdata('hapusProduk')=='bisa'){
+                            ?>
+                                <div class="alert alert-danger" role="alert">
+                                Hapus produk gagal, produk tidak ada atau terjadi kesalahan...
+                                </div>
+                            <?php
+                            }
+                            ?>
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
@@ -52,8 +67,7 @@
                                                 ?>
                                                 </td>
                                                 <td>
-                                                <a href="<?php echo base_url().'admin/produk/edit/'.$value->idProduk; ?>"><button type="button" class="btn btn-info">Edit</button></a>
-                                                <a href="<?php echo base_url().'admin/produk/hapus/'.$value->idProduk; ?>"></a><button type="button" class="btn btn-danger">Hapus</button>
+                                                <a href="<?php echo base_url().'admin/produk/hapus/'.$value->idProduk; ?>"><button type="button" class="btn btn-danger">Hapus</button></a>
                                                 </td>
                                             </tr>
                                             <?php
