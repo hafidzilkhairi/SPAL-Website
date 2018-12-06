@@ -128,31 +128,66 @@ class Admin extends CI_Controller {
 	}
 
 	public function tambahProduk($status = null){
-		$parameter['judul']="Tambah Produk";
-		if($status == 'upload'){
-			$this->form_validation->set_rules('namaProduk', 'Nama Produk', 'required',
-				array('required' => '
-				<div class="alert alert-danger" role="alert">
-				Harap mengisi nama produk
-				</div>'));
-			$this->form_validation->set_rules('hargaProduk', 'Harga Produk', 'required',
-				array('required' => '
-				<div class="alert alert-danger" role="alert">
-				Harap mengisi harga produk
-				</div>'));
-			if ($this->form_validation->run() == FALSE){
+		if($this->session->has_userdata('idAdmin')){
+			$parameter['judul']="Tambah Produk";
+			if($status == 'upload'){
+				$this->form_validation->set_rules('namaProduk', 'Nama Produk', 'required',
+					array('required' => '
+					<div class="alert alert-danger" role="alert">
+					Harap mengisi nama produk
+					</div>'));
+				$this->form_validation->set_rules('hargaProduk', 'Harga Produk', 'required',
+					array('required' => '
+					<div class="alert alert-danger" role="alert">
+					Harap mengisi harga produk
+					</div>'));
+				$this->form_validation->set_rules('jumlahProduk', 'Jumlah Produk', 'required',
+					array('required' => '
+					<div class="alert alert-danger" role="alert">
+					Harap mengisi jumlah produk
+					</div>'));
+				if ($this->form_validation->run() == FALSE){
+					$this->load->view('admin/header');
+					$this->load->view('admin/tambahProdukV',$parameter);
+					$this->load->view('admin/footer');
+				}else{
+					$data = array(
+						'idAdmin' => $this->session->userdata('idAdmin'),
+						'namaProduk' => $_POST['namaProduk'],
+						'hargaProduk' => $_POST['hargaProduk'],
+						'jumlahProduk' => $_POST['jumlahProduk'],
+					);
+					$this->session->set_flashdata('uploadGambarProduk',1);
+					$this->db->insert('produk',$data);
+					if(isset($_FILES['gambarProduk'])){
+						$this->db->select_max('idProduk','maks');
+						$this->db->insert('gambarProduk',array('idProduk'=>$this->db->get('produk')->result()[0]->maks));
+						$config['upload_path']          = 'images/produk/';
+						$config['allowed_types']        = 'gif|bmp|jpg|png|jpeg';
+						
+						$this->db->select_max('idGambar','maks');
+						$config['file_name'] = $this->db->get('gambarProduk')->result()[0]->maks;
+						$extension = pathinfo($_FILES["gambarProduk"]['name'], PATHINFO_EXTENSION);
+						$fullpath = $config['upload_path'].$config['file_name'].'.'.$extension;
+						if(file_exists($fullpath)){
+							unlink($fullpath);
+						}
+						$this->db->where('idGambar',$config['file_name']);
+						$this->db->update('gambarProduk',array('extension'=>$extension));
+						$this->load->library('upload',$config);
+						if(!$this->upload->do_upload('gambarProduk')){
+							$this->session->set_flashdata('uploadGambarProduk',2);
+						}
+					}
+					redirect($this->config->base_url().'admin/tambahProduk');
+				}
+			}else{
 				$this->load->view('admin/header');
 				$this->load->view('admin/tambahProdukV',$parameter);
 				$this->load->view('admin/footer');
-			}else{
-				if($this->input->post('gambarProduk')){
-					echo 'gambar';
-				}
 			}
 		}else{
-			$this->load->view('admin/header');
-			$this->load->view('admin/tambahProdukV',$parameter);
-			$this->load->view('admin/footer');
+			redirect($this->config->base_url().'admin');
 		}
 	}
 

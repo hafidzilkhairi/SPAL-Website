@@ -394,20 +394,20 @@ class CI_Upload {
 				$_file = $_file[$field];
 			}
 		}
-
+		
 		if ( ! isset($_file))
 		{
 			$this->set_error('upload_no_file_selected', 'debug');
 			return FALSE;
 		}
-
+		
 		// Is the upload path valid?
 		if ( ! $this->validate_upload_path())
 		{
 			// errors will already be set by validate_upload_path() so just return FALSE
 			return FALSE;
 		}
-
+		
 		// Was the file able to be uploaded? If not, determine the reason why.
 		if ( ! is_uploaded_file($_file['tmp_name']))
 		{

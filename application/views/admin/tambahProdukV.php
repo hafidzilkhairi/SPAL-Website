@@ -7,20 +7,44 @@
                                 <strong class="card-title"><?php echo $judul; ?></strong>
                             </div>
                             <div class="card-body">
+                                <?php
+                                if($this->session->flashdata('uploadGambarProduk')==1){
+                                    ?>
+                                    
+                                <div class="alert alert-success" role="alert">
+                                Upload produk sukses!!!
+                                </div>
+                                    <?php
+                                }else if($this->session->flashdata('uploadGambarProduk')==2){
+                                    ?>
+                                <div class="alert alert-danger" role="alert">
+                                Upload produk gagal!!!
+                                </div>
+                                    <?php
+                                }
+                                ?>
                                 <div class="col-md-6">
                                     <img id="image_upload_preview" src="https://via.placeholder.com/600">
                                 </div>
                                 <div class="col-md-6">
                                         <?php echo validation_errors(); ?>
 
-                                        <?php echo form_open('admin/tambahProduk/upload'); ?>
+                                        <?php echo form_open_multipart('admin/tambahProduk/upload');?>
                                         <div class="form-group">
                                             <label>Nama Produk</label>
                                             <input name="namaProduk" type="text" class="form-control" required>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Harga Produk</label>
-                                            <input name="hargaProduk" type="number" class="form-control" min="0" required>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Harga Produk</label>
+                                                <input name="hargaProduk" type="number" class="form-control" min="0" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>jumlah Produk</label>
+                                                <input name="jumlahProduk" type="number" class="form-control" min="0" required>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="">Gambar Produk</label>
