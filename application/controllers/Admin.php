@@ -202,8 +202,10 @@ class Admin extends CI_Controller {
 					$this->db->where('idProduk',$idProdukP);
 					$this->db->delete('produk');
 					$this->session->set_flashdata('hapusProduk','bisa');
+					redirect($this->config->base_url().'admin/produk');
 				}else{
 					$this->session->set_flashdata('hapusProduk','gagal');
+					redirect($this->config->base_url().'admin/produk');
 				}
 			}else
 			// ######Akhir tambah Produk#######
