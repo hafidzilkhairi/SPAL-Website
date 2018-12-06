@@ -51,17 +51,15 @@
                                                     }
                                                 ?>
                                                 </td>
+                                                <td>
+                                                <button type="button" class="btn btn-info fs fs-pencil">Edit</button>
+                                                <button type="button" class="btn btn-danger fs fs-pencil">Edit</button>
+                                                </td>
                                             </tr>
                                             <?php
                                         } 
                                     }
                                     ?>
-                                        <tr>
-                                            <td>Donna Snider</td>
-                                            <td>Customer Support</td>
-                                            <td>New York</td>
-                                            <td>$112,000</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
