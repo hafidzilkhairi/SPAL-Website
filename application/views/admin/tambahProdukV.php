@@ -29,7 +29,7 @@
                                 <div class="col-md-6">
                                         <?php echo validation_errors(); ?>
 
-                                        <?php echo form_open_multipart('admin/tambahProduk/upload');?>
+                                        <?php echo form_open_multipart('admin/produk/tambah/upload');?>
                                         <div class="form-group">
                                             <label>Nama Produk</label>
                                             <input name="namaProduk" type="text" class="form-control" required>

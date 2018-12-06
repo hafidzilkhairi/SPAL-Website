@@ -52,8 +52,8 @@
                                                 ?>
                                                 </td>
                                                 <td>
-                                                <button type="button" class="btn btn-info fs fs-pencil">Edit</button>
-                                                <button type="button" class="btn btn-danger fs fs-pencil">Edit</button>
+                                                <a href="<?php echo base_url().'admin/produk/edit/'.$value->idProduk; ?>"><button type="button" class="btn btn-info">Edit</button></a>
+                                                <a href="<?php echo base_url().'admin/produk/hapus/'.$value->idProduk; ?>"></a><button type="button" class="btn btn-danger">Hapus</button>
                                                 </td>
                                             </tr>
                                             <?php

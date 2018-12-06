@@ -126,12 +126,12 @@ class Admin extends CI_Controller {
 		redirect('http://localhost/SPAL-Website/admin/signIn','location');
 	}
 
-	public function produk($status = null, $idProduk = null){
+	public function produk($status = null, $idProdukP = null){
 		if($this->session->has_userdata('idAdmin')){
 			// ###########Tambah Produk##########
 			if($status=='tambah'){
 				$parameter['judul']="Tambah Produk";
-				if($status == 'upload'){
+				if($idProdukP == 'upload'){
 					$this->form_validation->set_rules('namaProduk', 'Nama Produk', 'required',
 						array('required' => '
 						<div class="alert alert-danger" role="alert">
@@ -187,6 +187,8 @@ class Admin extends CI_Controller {
 					$this->load->view('admin/tambahProdukV',$parameter);
 					$this->load->view('admin/footer');
 				}
+			}else if($status == 'hapus' && $idProdukP != null){
+				$this->db->where();
 			}else
 			// ######Akhir tambah Produk#######
 			
